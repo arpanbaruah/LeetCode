@@ -1,64 +1,71 @@
-public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        
-        int rem = 0;
-        int total = 0;
-        ListNode head = new ListNode(0);
-        ListNode prev = head;
-        ListNode nl1 = reverse(l1);
-        ListNode nl2 = reverse(l2);
-        while(nl1 != null && nl2 != null){
-            
-            total = nl1.val + nl2.val + rem;
-            prev.next = new ListNode(total%10);
-            prev = prev.next;
-            rem = total/10;
-            nl1 = nl1.next;
-            nl2 = nl2.next;
-            
-        }
-        
-        while(nl1 != null){
-            total = nl1.val + rem;
-            prev.next = new ListNode(total%10);
-            prev = prev.next;
-            rem = total/10;
-            nl1 = nl1.next;
-        }
-        
-        while(nl2 != null){
-            total = nl2.val + rem;
-            prev.next = new ListNode(total%10);
-            prev = prev.next;
-            rem = total/10;
-            nl2 = nl2.next;
-        }
-        
-        if(rem > 0){
-           // ListNode curr = new ListNode(rem);
-            prev.next = new ListNode(rem);
-            prev = prev.next;
-        }
-        
-        return reverse(head.next);
-        
-        
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+    
+    head := ListNode{0, nil}
+    prev := &head
+    
+    total := 0
+    rem := 0
+    
+    l1 = reverse(l1)
+    l2 = reverse(l2)
+    
+    for l1 != nil && l2 != nil {
+    
+        total = l1.Val + l2.Val + rem
+        prev.Next = &ListNode{total%10, nil}
+        prev = prev.Next
+        l1 = l1.Next
+        l2 = l2.Next
+        rem = total/10
         
     }
     
-    public ListNode reverse(ListNode curr){
+    for l1 != nil {
         
-        ListNode prev = null;
-    
-        
-        while(curr != null){
-            
-            ListNode pt = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = pt;
-            
-        }
-        
-        return prev;
+        total = l1.Val + rem
+        prev.Next = &ListNode{total%10, nil}
+        prev = prev.Next
+        l1 = l1.Next
+        rem = total/10
         
     }
+    
+    
+    for l2 != nil {
+        
+        total = l2.Val + rem
+        prev.Next = &ListNode{total%10, nil}
+        prev = prev.Next
+        l2 = l2.Next
+        rem = total/10
+        
+    }
+    
+    
+    if rem > 0 {
+        prev.Next = &ListNode{rem, nil}
+        prev = prev.Next
+    }
+    
+    
+    return reverse(head.Next)
+    
+}
+
+
+func reverse(curr *ListNode) *ListNode {
+    
+    var prev *ListNode
+    
+    for curr != nil {
+        
+        pt := curr.Next
+        curr.Next = prev
+        prev = curr
+        curr = pt
+        
+    }
+    
+    return prev
+    
+}
