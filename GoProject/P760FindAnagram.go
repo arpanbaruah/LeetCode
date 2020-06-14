@@ -14,4 +14,4 @@ func anagramMappings(A []int, B []int) []int {
     }
     
     return res
-}
+}}+
